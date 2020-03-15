@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+void zbroj (int a, int b, float matrica1[][100]){
+  float suma[100][1];
+  int i, j;
+
+  for (i = 0; i < a; ++i){
+    suma[i][0]=0;
+    for (j = 0; j < b; ++j){
+      suma[i][0]+=matrica1[i][j];
+    }
+  }
+
+  for (i = 0; i < a; ++i){
+    printf ("%.3f\n", suma[i][0]);
+  }
+}
+
+int main() {
+
+  int m1, n1, i, j;
+  float matrica1[100][100];
+
+  scanf ("%d %d", &m1, &n1);
+  for (i = 0; i < m1; ++i){
+    for (j = 0; j < n1; ++j){
+      scanf (" %f", &matrica1[i][j]);
+    }
+    scanf ("\n");
+  }
+
+  zbroj (m1, n1, matrica1);
+ 
+
+  return 0;
+}
