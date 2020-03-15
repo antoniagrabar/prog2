@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+void print_binary(uint32_t b, int n) {
+  uint32_t p = (1 << (n - 1));
+
+  while(p != 0) {
+    printf("%d",b & p ? 1 : 0);
+    p >>= 1;
+  }
+}
+
+int main() {
+  int n, k;
+
+  scanf("%d %d", &n, &k);
+
+  print_binary (n, k);
+  
+  return 0;
+}
