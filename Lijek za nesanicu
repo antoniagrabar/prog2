@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include<math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+int main() {
+
+  int k, l, m, n, br=0;
+  long i, d;
+
+  scanf ("%d\n", &k);
+  scanf ("%d\n", &l);
+  scanf ("%d\n", &m);
+  scanf ("%d\n", &n);
+  scanf ("%ld", &d);
+
+  for (i = 1; i < d+1; ++i){
+    if (i%k==0 || i%l==0 || i%m==0 || i%n==0)
+      br++;
+  }
+
+  printf("%d", br);
+  
+  return 0;
+}
