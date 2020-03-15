@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  int a;
+  int b;
+} mirko;
+
+int main() {
+
+  int k, i;
+  mirko brojevi[40];
+  scanf ("%d", &k);
+
+  brojevi[0].a=0;
+  brojevi[0].b=1;
+
+  for (i = 1; i < 40; ++i){
+    brojevi[i].a=brojevi[i-1].b;
+    brojevi[i].b=brojevi[i-1].a + brojevi[i-1].b;
+  }
+
+  printf("%d %d", brojevi[k-1].a, brojevi[k-1].b);
+
+  return 0;
+}
