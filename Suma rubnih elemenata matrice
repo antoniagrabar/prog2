@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+int main() {
+
+  int m, n, i, j, suma=0;
+  int polje[20][20];
+
+  scanf ("%d %d\n", &m, &n);
+  for (i = 0; i < m; ++i){
+    for (j = 0; j < n; ++j){
+      scanf ("%d ", &polje[i][j]);
+    }
+  }
+
+  for (i = 0; i < m; ++i){
+    for (j = 0; j < n; ++j){
+      if (i==0 || i==m-1 || j==0 || j==n-1){
+        suma+=polje[i][j];
+      }
+    }
+  }
+
+  printf("%d", suma );
+
+
+  return 0;
+}
