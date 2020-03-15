@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+void zbroj (int a, int b, int matrica1[][100], int matrica2[][100]){
+  int suma[100][100], i, j;
+
+  for (i = 0; i < a; ++i){
+    for (j = 0; j < b; ++j){
+      suma[i][j]=matrica1[i][j]+matrica2[i][j];
+    }
+  }
+
+  for (i = 0; i < a; ++i){
+    for (j = 0; j < b; ++j){
+      printf ("%d ", suma[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+int main() {
+
+  int m1, n1, m2, n2, i, j, matrica1[100][100], matrica2[100][100];
+
+  scanf ("%d %d", &m1, &n1);
+  for (i = 0; i < m1; ++i){
+    for (j = 0; j < n1; ++j){
+      scanf (" %d", &matrica1[i][j]);
+    }
+    scanf ("\n");
+  }
+
+  scanf ("%d %d", &m2, &n2);
+  for (i = 0; i < m2; ++i){
+    for (j = 0; j < n2; ++j){
+      scanf (" %d", &matrica2[i][j]);
+    }
+    scanf ("\n");
+  }
+
+  if (m1!=m2 && n1!=n2){
+    printf("NE");
+  } else {
+    printf("DA\n");
+    zbroj(m1, n1, matrica1, matrica2);
+  }
+
+  return 0;
+}
