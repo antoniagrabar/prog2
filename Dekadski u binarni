@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include<math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+int main() {
+
+  int n, i=0, j, polje[100] = {0};
+  scanf ("%d", &n);
+  
+
+  while (n > 0){
+    polje[i]=n%2;
+    n/=2;
+    i++;
+  }
+
+  for (j = i-1; j >= 0; --j){
+    printf("%d", polje[j]);
+  }
+
+  
+  return 0;
+}
