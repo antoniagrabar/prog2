@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+int main() {
+
+  char znak;
+  int16_t a, b;
+
+  scanf ("%c\n", &znak);
+  scanf ("%hi %hi", &a, &b);
+
+  switch (znak){
+    case '&':
+      printf("%hhu", a & b);
+      break;
+
+    case '|':
+      printf("%hhu", a | b);
+      break;
+
+    case '^':
+      printf("%hhu", a ^ b);
+      break;
+
+    case '<':
+      printf("%hhu", a << b);
+      break;
+
+    case '>':
+      printf("%hhu", a >> b);
+      break;
+
+  }
+  return 0;
+}
