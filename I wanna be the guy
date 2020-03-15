@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG (...) printf(__VA_ARGS__)
+#endif
+
+int main () {
+
+int n, p[100], q[100], rez[100]={0}, i, j, flag=1;
+
+scanf ("%d", &n);
+for (i = 0; i < n; ++i){
+  scanf (" %d", &p[i]);
+}
+
+for (i = 0; i < n; ++i){
+  scanf (" %d", &q[i]);
+}
+
+for (i = 0; i < n; ++i){
+  for (j = 1; j <= n; ++j){
+    if (p[i]==j){
+      rez[j-1]++;
+    }
+  }
+}
+
+for (i = 0; i < n; ++i){
+  for (j = 1; j <= n; ++j){
+    if (q[i]==j){
+      rez[j-1]++;
+    }
+  }
+}
+
+for (i = 0; i < n; ++i){
+  if (rez[i]==0){
+    flag=0;
+  } else {
+    flag=1;
+  }
+}
+
+if (flag){
+  printf("I become the guy.");
+} else {
+  printf("Oh, my keyboard!");
+}
+ 
+return 0;
+}
