@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(VA_ARGS)
+#endif
+
+#define SIZE 10
+
+void sort(int count[SIZE], int indices[SIZE]) {
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 1; j < SIZE; j++){
+        
+            if (count[j - 1] < count[j]){
+                int tmp = count[j - 1];
+                count[j - 1] = count[j];
+                count[j] = tmp;
+
+                tmp = indices[j - 1];
+                indices[j - 1] = indices[j];
+                indices[j] = tmp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, count[SIZE] = {0}, indices[SIZE] = {0};
+
+    scanf("%d", &n);
+    while(n > 0) {
+        count[n - 1]++;
+        scanf("%d", &n);
+    }
+
+    for (int i = 0; i < SIZE; i++){
+        indices[i] = i + 1;
+    }
+
+    sort(count, indices);
+
+    for (int i = 0; i < SIZE; i++){
+        if (count[i] != 0){
+            printf("%d\t", indices[i]);
+        }
+    }
+
+    printf("\n");
+
+    for (int i = 0; i < SIZE; i++){
+        if (count[i] != 0){
+            printf("%d\t", count[i]);
+        }
+    }
+    
+  return 0;
+}
