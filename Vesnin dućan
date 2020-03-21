@@ -1,56 +1,62 @@
 #include <stdio.h>
+#include <stdint.h>
 
 #ifndef DEBUG
-#define DEBUG(...) printf(VA_ARGS)
+#define DEBUG(...) printf(__VA_ARGS__)
 #endif
 
 #define SIZE 10
 
-void sort(int count[SIZE], int indices[SIZE]) {
-    for (int i = 0; i < SIZE; i++){
-        for (int j = 1; j < SIZE; j++){
-        
-            if (count[j - 1] < count[j]){
-                int tmp = count[j - 1];
-                count[j - 1] = count[j];
-                count[j] = tmp;
+void bubble_sort (int a1[SIZE], int a2[SIZE]){
 
-                tmp = indices[j - 1];
-                indices[j - 1] = indices[j];
-                indices[j] = tmp;
-            }
-        }
+  for (int i = 0; i < SIZE; ++i){
+    for (int j = 1; j < SIZE; ++j){
+      if (a1[j - 1] < a1[j]){
+        int tmp = a1[j - 1];
+        a1[j - 1] = a1[j];
+        a1[j] = tmp;
+
+        tmp = a2[j - 1];
+        a2[j - 1] = a2[j];
+        a2[j] = tmp;
+
+      }
     }
+  }
 }
 
-int main() {
-    int n, count[SIZE] = {0}, indices[SIZE] = {0};
 
-    scanf("%d", &n);
+int main(){
+    int promet[SIZE] = {0}, kol[SIZE] = {0}, n;
+
+    scanf("%d ", &n);
     while(n > 0) {
-        count[n - 1]++;
-        scanf("%d", &n);
+        kol[n - 1]++;
+        scanf("%d ", &n);
     }
 
-    for (int i = 0; i < SIZE; i++){
-        indices[i] = i + 1;
+    for (int i = 0; i < SIZE; ++i){
+        promet[i] = i +1;
     }
 
-    sort(count, indices);
+    bubble_sort(kol, promet);
 
-    for (int i = 0; i < SIZE; i++){
-        if (count[i] != 0){
-            printf("%d\t", indices[i]);
-        }
+
+    for (int i = 0; i < SIZE; ++i){
+
+        if (kol[i] != 0){
+            printf("%d\t", promet[i]);
+        } 
     }
 
     printf("\n");
 
-    for (int i = 0; i < SIZE; i++){
-        if (count[i] != 0){
-            printf("%d\t", count[i]);
-        }
+    for (int i = 0; i < SIZE; ++i){
+
+        if (kol[i] != 0){
+            printf("%d\t", kol[i]);
+        } 
     }
-    
-  return 0;
+
+    return 0;
 }
