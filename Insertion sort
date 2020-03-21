@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdint.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+void load_data(int array[], int n){
+  for (int i = 0; i < n; ++i){
+    scanf("%d ", &array[i]);
+  }
+}
+
+
+void insertion_sort(int array[], int n){
+
+  for (int i = 1; i < n; ++i){
+    int key = array[i];
+    int j = i;
+
+    while (j > 0 && array[j -1] > key){
+      array[j] = array[j - 1];
+      j--;
+    }
+
+    array[j] = key;
+  }
+}
+
+ 
+int main(){
+  int polje[500];
+  int size;
+
+  scanf ("%d\n", &size);
+
+  load_data(polje, size);
+
+  insertion_sort(polje, size);
+
+  for (int i = 0; i < size; ++i){
+    printf("%d ", polje[i]);
+  }
+  
+  return 0;
+}
