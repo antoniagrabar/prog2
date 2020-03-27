@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct{
+  float x;
+  float y;
+  float z;
+}koordinate;
+
+float udaljenost(koordinate a, koordinate b){
+  float distance;
+
+  distance = sqrt(pow((b.x - a.x), 2) + pow((b.y - a.y), 2) + pow((b.z - a.z), 2));
+
+  return distance;
+}
+
+float max_udaljenost(koordinate points[], int n) {
+  float max = 0;
+
+  for (int i = 0; i < n; ++i){
+    for (int j = i + 1; j < n; ++j)
+    {
+      float dist = udaljenost(points[i], points[j]);
+
+      if (dist > max && dist > 0){
+        max = dist;
+      }
+    }
+  }
+
+  return max;
+}
+
+
+
+int main() {
+
+  koordinate tocke[10];
+  int n, min_i = 0, max_i = 0;
+  float sum, rez;
+
+  scanf ("%d\n", &n);
+
+  for (int i = 0; i < n; ++i){
+      scanf("%f %f %f\n", &tocke[i].x, &tocke[i].y, &tocke[i].z );
+  }
+
+  printf("%.2f", max_udaljenost(tocke, n));
+
+
+  return 0;
+}
