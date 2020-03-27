@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct{
+  float re;
+  float im;
+}complex;
+
+complex rezultat(complex x, complex y, char c){
+  complex rez;
+
+  switch (c){
+    case '+':
+      rez.re = x.re + y.re;
+      rez.im = x.im + y.im;
+      break;
+
+    case '-':
+      rez.re = x.re - y.re;
+      rez.im = x.im - y.im;
+      break;
+
+    case '*':
+      rez.re = x.re * y.re - x.im * y.im;
+      rez.im = x.im * y.re + x.re * y.im;
+      break;
+
+    case '/':
+      rez.re = (x.re * y.re + x.im * y.im)/(y.re * y.re + y.im * y.im);
+      rez.im = (x.im * y.re - x.re * y.im)/(y.re * y.re + y.im * y.im);
+      break;
+  }
+
+  return rez;
+}
+
+int main() {
+
+  complex a, b, c;
+  char op;
+
+  scanf ("%f %f\n", &a.re, &a.im);
+  scanf ("%f %f\n", &b.re, &b.im);
+  scanf("%c", &op);
+
+  c = rezultat(a, b, op);
+
+  printf("%.2f %.2f", c.re, c.im);
+
+
+  return 0;
+}
