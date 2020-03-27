@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct{
+  int m;
+  int n;
+  int matrix[100][100];
+  char parity;
+}svojstva;
+
+
+
+int main() {
+
+  svojstva matrica;
+  int sum;
+
+  scanf ("%c", &matrica.parity);
+  scanf ("%d %d", &matrica.m, &matrica.n);
+  for (int i = 0; i < matrica.m; ++i){
+    for (int j = 0; j < matrica.n; ++j){
+      scanf ("%d", &matrica.matrix[i][j]);
+    }
+  }
+
+
+  for (int i = 0; i < matrica.m; ++i){
+    sum = 0;
+
+    for (int j = 0; j < matrica.n; ++j){
+      sum += matrica.matrix[i][j];
+    }
+
+    if ((sum % 2 == 0 && matrica.parity == 'p') || (sum % 2 != 0 && matrica.parity == 'n')){
+      printf("0 ");
+    } else {
+      printf("1 ");
+    }
+  }
+
+  printf("\n");
+
+  for (int j = 0; j < matrica.n; ++j){
+    sum = 0;
+
+    for (int i = 0; i < matrica.m; ++i){
+      sum += matrica.matrix[i][j];
+    }
+
+    if ((sum % 2 == 0 && matrica.parity == 'p') || (sum % 2 != 0 && matrica.parity == 'n')){
+      printf("0 ");
+    } else {
+      printf("1 ");
+    }
+  }
+
+
+  return 0;
+}
