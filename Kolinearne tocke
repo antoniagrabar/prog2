@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  int x;
+  int y;
+} point;
+
+typedef struct {
+  float k;
+  float l;
+} line;
+
+// Napisati funkciju za ucitavanje tocaka
+void load_points(point tocka[], int n) {
+  for (int i = 0; i < n; ++i){
+    scanf ("%d %d\n", &tocka[i].x, &tocka[i].y);
+  }
+}
+
+line calculate_coefficients(point p1, point p2) {
+  line l;
+
+  l.k = (float) (p2.y - p1. y) / (p2.x - p1.x);
+  l.l = p1.y - l.k * p1.x;
+
+  return l;
+}
+
+int check_collinearity(point p[], int n) {
+  line l;
+  int rez = 0;
+
+  l = calculate_coefficients(p[0], p[1]);
+
+  // Napisati dio koda za provjeru kolinearnosti
+  for (int i = 0; i < n; ++i){
+    if (p[i].y - l.k * p[i].x - l.l == 0){
+      rez = 1;
+    } else {
+      rez = 0;
+      break;
+    }
+  }
+
+  return rez;
+}
+
+int main() {
+  int n;
+  point p[128];
+
+  scanf("%d", &n);
+
+  load_points (p, n);
+
+  if (check_collinearity(p, n)) {
+    printf("DA");
+  } else {
+    printf("NE");
+  }
+
+  return 0;
+}
