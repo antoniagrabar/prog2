@@ -21,6 +21,7 @@ void insertion_sort (int array[], int n){
   }
 }
 
+
 double distance (int a, int b){
   double rez = 0;
   rez = sqrt(a * a + b * b);
