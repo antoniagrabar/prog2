@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <math.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  int a;
+  int b;
+  int c;
+} triangle;
+
+// Napisati funkciju za ucitavanje duljina starnica
+void load_lengths(triangle x[], int n) {
+  for (int i = 0; i < n; ++i){
+    scanf ("%d %d %d\n", &x[i].a, &x[i].b, &x[i].c);
+  }
+}
+
+// Napisati funkciju koja vraca 1 ako se radi te 0 ako se ne radi o pravokutnom trokutu
+int check_right_angle(triangle x) {
+ 
+    if (x.a > x.b && x.a > x.c){
+      if (pow(x.a, 2) == pow(x.b, 2) + pow(x.c, 2)){
+        return 1;
+      } else {
+        return 0;
+      }
+
+    } else if (x.b > x.a && x.b > x.c){
+      if (pow(x.b, 2) == pow(x.a, 2) + pow(x.c, 2)){
+        return 1;
+      } else {
+        return 0;
+      }
+
+    } else if (x.c > x.a && x.c > x.b){
+      if (pow(x.c, 2) == pow(x.b, 2) + pow(x.a, 2)){
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+}
+
+int main() {
+  int n;
+  triangle t[128];
+
+  scanf("%d", &n);
+
+  // Napisati poziv funkcije za ucitavanje duljina
+  load_lengths (t, n);
+
+  for (int i = 0; i < n; i++) {
+    if (check_right_angle(t[i])) {
+      printf("DA\n");
+    } else {
+      printf("NE\n");
+    }
+  }
+
+  return 0;
+}
