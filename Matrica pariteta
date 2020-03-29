@@ -26,6 +26,7 @@ int main() {
       scanf ("%d", &matrica.matrix[i][j]);
     }
   }
+  
 
 
   for (int i = 0; i < matrica.m; ++i){
