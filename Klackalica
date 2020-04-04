@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+
+int main() {
+
+    char line[100];
+    int lijeva_strana = 0, desna_strana = 0, bacva = 0;
+    
+
+    scanf("%[^\n]%*c", line);
+
+    for (int i = 0; i < strlen(line); i++) {
+        if (line[i] == 'B') {
+            bacva = i;
+        } 
+    }
+
+    for (int i = 0; i < bacva; ++i){
+        if (line[i] == 'S') {
+            lijeva_strana++;
+        }
+    }
+
+    for (int i = bacva; i < strlen(line); ++i){
+        if (line[i] == 'S') {
+            desna_strana++;
+        }
+    }
+
+    if (lijeva_strana > desna_strana){
+        printf("Lijevo");
+    } else if (lijeva_strana < desna_strana){
+        printf("Desno");
+    } else {
+        printf("Ravnoteza");
+    }
+
+
+return 0;
+}
