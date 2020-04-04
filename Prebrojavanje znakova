@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 255
+
+int main() {
+    
+    int n, slovo = 0, veliko = 0, malo = 0, znm = 0, space = 0, znakovi = 0;
+    char unos[MAX][MAX];
+
+    scanf ("%d\n", &n);
+
+    for (int i = 0; i < n; ++i){
+        scanf("%[^\n]%*c",unos[i]);
+        scanf("\n");
+    
+    }
+
+    for (int i = 0; i < n; ++i){
+        int j = 0;
+
+        while (unos[i][j] != '\0'){
+            if (isalpha(unos[i][j])){
+                slovo++;
+            }
+            if (isupper(unos[i][j])){
+                veliko++;
+            } 
+            if (islower(unos[i][j])){
+                malo++;
+            }
+            if (isdigit(unos[i][j])){
+                znm++;
+            }
+            if (unos[i][j] == ' '){
+                space++;
+            }
+            if (ispunct(unos[i][j])){
+                znakovi++;
+            }
+            j++;
+        }
+    }
+
+    printf("%d %d %d\n%d %d %d", slovo, veliko, malo, znm, space, znakovi);
+
+return 0;
+}
