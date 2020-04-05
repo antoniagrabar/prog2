@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int palindrom (int x, char polje[]){
+    int i, j, p=1;
+
+    for (i = 0; i < x; ++i){
+        if (polje[i]==' ' || (ispunct(polje[i]))){
+            for (j = i; j < x-1; ++j){
+                polje[j]=polje[j+1];
+            }
+            --x;
+        }
+        polje[i] = tolower(polje[i]);
+    }
+
+    for (i = 0; i < x; ++i){
+        if (polje[i]!=polje[x-1-i]){
+            p=0;
+            break;
+        } 
+    }
+
+    return p;
+}
+
+
+int main() {
+
+  char line[255];
+
+  scanf("%[^\n]%*c", line);
+
+  if (palindrom(strlen(line),line)){
+      printf("DA");
+    } else {
+      printf("NE");
+    }
+    
+
+return 0;
+}
