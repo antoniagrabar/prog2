@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+typedef struct{
+  char ime[100];
+  char prezime[100];
+  int dan;
+  int mjesec;
+  int godina;
+}student;
+
+int compare(student s1, student s2){
+  if (strcmp(s1.prezime, s2.prezime)==0 && strcmp(s1.ime, s2.ime)==0) {
+    if (s1.godina > s2.godina){
+      return 1;
+    } else if (s1.godina == s2.godina){
+      if (s1.mjesec > s2.mjesec){
+        return 1;
+      } else if (s1.mjesec == s2.mjesec){
+        if (s1.dan > s2.dan){
+          return 1;
+        }
+      }
+      else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  } else if (!strcmp(s1.prezime, s2.prezime)) {
+    return strcmp(s1.ime, s2.ime);
+  } else {
+    return strcmp(s1.prezime, s2.prezime);
+  }
+  
+  return -1;
+}
+    
+
+void sort(student s[], int size) {
+  for (int i = 0; i < size; ++i) {
+    student tmp = s[i];
+    int j = i;
+    while (j > 0 && compare(s[j - 1], tmp) > 0) {
+      s[j] = s[j - 1];
+      j--;
+    }
+    s[j] = tmp;
+  }
+}
+
+
+int main() {
+
+  int n;
+  student s[1000];
+
+  scanf ("%d\n", &n);
+
+  for (int i = 0; i < n; ++i){
+    scanf ("%s %s %d.%d.%d.\n", s[i].ime, s[i].prezime, &s[i].dan, &s[i].mjesec, &s[i].godina);
+  }
+
+  sort(s, n);
+
+  for (int i = 0; i < n; ++i){
+    printf("%s;%s;%d.%d.%d.\n", s[i].prezime, s[i].ime, s[i].dan, s[i].mjesec, s[i].godina);
+  }
+ 
+  return 0;
+}
