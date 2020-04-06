@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+void check(char a1[], char a2[][101], int m) {
+
+  int max_score = 0, max_i = 0;  
+
+  for (int i = 0; i < m; ++i){
+
+    if (strlen(a1) == strlen(a2[i])){
+      int score = 0;
+
+      for (int j = 0; j < strlen(a1); ++j){
+        if (a1[j] == a2[i][j] && isalpha(a1[j])){
+          score++;
+        }
+      }
+
+      if (score > max_score){
+        max_score = score;
+        max_i = i;
+      }
+    }
+  }
+
+  printf("%s\n", a2[max_i]);
+}
+
+
+int main() {
+	int n, m;
+  char broken[100][101];
+  char original[100][101];
+
+  scanf ("%d\n", &n);
+
+  for (int i = 0; i < n; ++i){
+    scanf("%s ", broken[i]);
+  }
+
+  scanf ("%d\n", &m);
+
+  for (int i = 0; i < m; ++i){
+    scanf("%s ", original[i]);
+  }
+
+  for (int i = 0; i < n; ++i){
+    check(broken[i], original, m);
+  }
+  
+  return 0;
+}
