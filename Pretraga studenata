@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+#define SIZE 1000
+
+typedef struct{
+  char jmbag[32];
+  char ime[32];
+  char prezime[32];
+  char datum[20];
+}student;
+
+typedef struct{
+  char c;
+  char string[32];
+}search;
+
+int compare(student s1, student s2){
+  return (strcmp(s1.jmbag, s2.jmbag));
+}
+
+
+void sort (student array[], int n){
+  for (int i = 1; i < n; i++) {
+    student tmp = array[i];
+    int j = i;
+
+    while (j > 0 && compare(array[j - 1], tmp) > 0) {
+        array[j] = array[j - 1];
+        j--;
+    }
+
+    array[j] = tmp;
+  }
+}
+
+
+
+int main() {
+
+  int n, m;
+  student s[SIZE];
+  search unos[SIZE];
+
+  scanf ("%d", &n);
+
+  for (int i = 0; i < n; ++i){
+    scanf ("%s %s %s %s\n", s[i].jmbag, s[i].ime, s[i].prezime, s[i].datum);
+  }
+
+  scanf ("%d\n", &m);
+
+  for (int i = 0; i < m; ++i){
+    scanf ("%c %s\n", &unos[i].c, unos[i].string);
+  }
+
+  sort(s, n);
+
+
+  for (int i = 0; i < m; ++i){
+    int flag = 1;
+
+    switch(unos[i].c){
+
+      case'I':
+        flag = 1;
+        printf("Ime: %s\n", unos[i].string );
+        for (int j = 0; j < n; ++j){
+          if (!strcmp(unos[i].string, s[j].ime)){
+            flag = 0;
+            printf("%s %s %s %s\n", s[j].jmbag, s[j].prezime, s[j].ime, s[j].datum);
+          } 
+        }
+        if (flag){
+          printf("-\n");
+        }
+        break;
+
+      case'P':
+        flag = 1;
+        printf("Prezime: %s\n", unos[i].string );
+        for (int j = 0; j < n; ++j){
+          if (!strcmp(unos[i].string, s[j].prezime)){
+            flag = 0;
+            printf("%s %s %s %s\n", s[j].jmbag, s[j].prezime, s[j].ime, s[j].datum);
+          } 
+        }
+        if (flag){
+          printf("-\n");
+        }
+        break;
+
+      case'J':
+        flag = 1;
+        printf("JMBAG: %s\n", unos[i].string );
+        for (int j = 0; j < n; ++j){
+          if (!strcmp(unos[i].string, s[j].jmbag)){
+            flag = 0;
+            printf("%s %s %s %s\n", s[j].jmbag, s[j].prezime, s[j].ime, s[j].datum);
+          } 
+        }
+        if (flag){
+          printf("-\n");
+        }
+        break;
+    }
+  }
+
+  return 0;
+}
