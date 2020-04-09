@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  char ime[32];
+  char prezime[32];
+  char alergija[5];
+  char email[100];
+  int start;
+  int end;
+}pacijent;
+
+typedef struct {
+  int d;
+  int m;
+  int y;
+}date;
+
+void check_letters (char word[]){
+  word[0] = toupper(word[0]);
+
+  for (int i = 1; i < strlen(word); ++i){
+    if (isupper(word[i])){
+      word[i] = tolower(word[i]);
+    }
+  }
+}
+
+int compare (pacijent p1, pacijent p2){
+  if (!strcmp(p1.prezime, p2.prezime)){
+    return strcmp(p1.ime, p2.ime);
+  } else {
+    return strcmp(p1.prezime, p2.prezime);
+  }
+}
+
+void sort (pacijent array[], int n){
+  for (int i = 1; i < n; i++) {
+    pacijent tmp = array[i];
+    int j = i;
+
+    while (j > 0 && compare(array[j-1], tmp) > 0) {
+        array[j] = array[j - 1];
+        j--;
+    }
+
+    array[j] = tmp;
+  }
+}
+
+
+
+int main() {
+
+  int n;
+  date datum;
+  pacijent p[100];
+
+  scanf ("%d\n", &n);
+
+  for(int i = 0; i < n; i++){
+        scanf("%s %s %s %s", p[i].ime, p[i].prezime, p[i].email, p[i].alergija);
+        if(!strcmp(p[i].alergija, "DA")){
+            scanf(" %d %d", &p[i].start, &p[i].end);
+            check_letters(p[i].ime);
+            check_letters(p[i].prezime);
+        }
+  }
+ 
+
+  scanf("%d.%d.%d", &datum.d, &datum.m, &datum.y);
+
+  sort(p, n);
+
+  for (int i = 0; i < n; ++i){
+    if (p[i].alergija[0] == 'D' && datum.m >= p[i].start && datum.m <= p[i].end){
+      printf("%s, %s: %s\n", p[i].prezime, p[i].ime, p[i].email);
+    }
+  }
+  
+  return 0;
+}
