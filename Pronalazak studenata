@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  char ime[16];
+  char prezime[16];
+} student;
+
+// Napisati funkciju koja provjerava da li ime i prezime studenta s pocinju sa zadanim dijelom imena i prezimena iz search-a
+// Funkcija vraca 1 ako pocinju i 0 ako ne pocinju
+int check_name(student s, student search) {
+  if (!strncmp(s.ime, search.ime, strlen(search.ime)) && !strncmp(s.prezime, search.prezime, strlen(search.prezime))) {
+    return 1;
+  }
+
+  return 0;
+}
+
+
+int main() {
+  int n;
+  student search;
+  student s[32];
+
+  scanf("%s %s", search.ime, search.prezime);
+
+  scanf("%d", &n);
+
+  for (int i = 0; i < n; i++) {
+    scanf("%s %s", s[i].ime, s[i].prezime);
+  }
+
+  // Napisati dio koda za prolazak kroz sve studente, pretragu i ispis
+  for (int i = 0; i < n; ++i){
+    if (check_name(s[i], search)){
+      printf("%s, %s\n", s[i].prezime, s[i].ime);
+    }
+  }
+
+  return 0;
+}
