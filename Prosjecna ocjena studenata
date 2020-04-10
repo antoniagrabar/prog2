@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  char ime[127];
+  char prezime[127];
+  int kolegij;
+  float prosjek;
+  int greska;
+}student;
+
+int fix(char word[], int cut) {
+  int i, n = 0;
+
+  for (i = 0; i < strlen(word); i++) {
+    if (!isalpha(word[i])) {
+      n++;
+    } else {
+      word[i - n] = tolower(word[i]);
+    }
+  }
+  word[0] = toupper(word[0]);
+  word[i - n] = '\0';
+  word[cut] = '\0';
+
+  return n;
+}
+
+
+int compare(student s1, student s2){
+  if (!strcmp(s1.prezime, s2.prezime)){
+    return strcmp(s1.ime, s2.ime);
+  } else {
+    return strcmp(s1.prezime, s2.prezime);
+  }
+}
+
+void sort (student array[], int n){
+  for (int i = 1; i < n; i++) {
+    student tmp = array[i];
+    int j = i;
+
+    while (j > 0 && compare(array[j - 1], tmp) > 0) {
+        array[j] = array[j - 1];
+        j--;
+    }
+
+    array[j] = tmp;
+  }
+}
+
+int main() {
+
+  int n, ocjena, sum = 0;
+  student s[11];
+
+  scanf ("%d\n", &n);
+
+  for (int i = 0; i < n; ++i){
+    s[i].greska = 0;
+    scanf("%s %s %d", s[i].ime, s[i].prezime, &s[i].kolegij);
+
+    s[i].greska += fix(s[i].prezime, strlen(s[i].prezime));
+    s[i].greska += fix(s[i].ime, strlen(s[i].prezime));
+
+    sum = 0;
+
+    for (int j = 0; j < s[i].kolegij; ++j){
+      scanf (" %d", &ocjena);
+      sum += ocjena;
+    }
+
+    s[i].prosjek = (float)sum / s[i].kolegij;
+    
+  }
+
+  sort(s, n);
+
+  for (int i = 0; i < n; ++i){
+    printf("%s, %s: %.3f.", s[i].prezime, s[i].ime, s[i].prosjek);
+
+    if (s[i].greska) {
+    printf(" GRESKA!");
+    }
+    printf("\n");
+  
+  }
+
+  return 0;
+}
