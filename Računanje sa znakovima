@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+// Napisati funkciju koja vraća operatore matematičkih operacija temeljem unesenog znakovnog niza
+char get_operator(char o[]) {
+  if (!strcmp("plus", o)) {
+    return '+';
+  }
+
+  if (!strcmp("minus", o)) {
+    return '-';
+  }
+
+  if (!strcmp("puta", o)) {
+    return '*';
+  }
+
+  if (!strcmp("podijeljeno", o)) {
+    return '/';
+  }
+
+  if (!strcmp("modulo", o)) {
+    return '%';
+  }
+  
+  return -1;
+}
+
+// Napisati funkciju koja vraća operande matematičkih operacija temeljem unesenog znakovnog niza
+int get_operand(char n[]) {
+  char numbers[10][16] = {"nula", "jedan", "dva", "tri", "cetiri", "pet", "sest", "sedam", "osam", "devet"};
+
+  for (int i = 0; i < 10; i++) {
+    if (!strcmp(numbers[i], n)) {
+      return i;
+    }
+  }
+  
+  return -1;
+}
+
+
+int calculate_operation(char a[], char b[], char o[]) {
+  switch(get_operator(o)) {
+    case '+':
+      return get_operand(a) + get_operand(b);
+    case '-':
+      return get_operand(a) - get_operand(b);
+    case '*':
+      return get_operand(a) * get_operand(b);
+    case '/':
+      return get_operand(a) / get_operand(b);
+    case '%':
+      return get_operand(a) % get_operand(b);
+  }
+  return -1;
+}
+
+int main() {
+  char a[16], b[16], o[16];
+
+  scanf("%s %s %s", a, o, b);
+
+  printf("%d", calculate_operation(a, b, o));
+
+  return 0;
+}
