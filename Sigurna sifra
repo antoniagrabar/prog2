@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+// Napisati funkciju koja provjerava ako postoje duplikati
+// Vraca 1 ako postoje i 0 ako ne postoje
+int check_duplicates(char pass[][32], int n) {
+  int flag = 0;
+
+  for (int i = 0; i < n; ++i){
+    for (int j = i + 1; j < n; ++j){
+      if (!strcmp(pass[i], pass[j])){
+        flag++;
+      }
+    }
+  }
+
+  if (flag){
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+// Napisati funkciju koja provjerava ispravnost sifre
+// Vraca 1 ako je sifra ispravna i 0 ako nije
+int check_password(char password[]) {
+  if (strlen(password) < 8){
+    return 0;
+  } 
+
+  int vs = 0, ms = 0, br = 0, zn = 0;
+
+  for (int i = 0; i < strlen(password); ++i){
+    if (islower(password[i])){
+      ms = 1;
+    } else if (isupper(password[i])){
+      vs = 1;
+    } else if (isdigit(password[i])){
+      br = 1;
+    } else if (ispunct(password[i])){
+      zn = 1;
+    }
+  }
+
+  return vs && ms && br && zn;
+}
+
+int main() {
+  int n;
+  char passwords[128][32];
+
+  scanf("%d", &n);
+
+  for (int i = 0; i < n; i++) {
+    scanf("%s", passwords[i]);
+  }
+
+  if (check_duplicates(passwords, n)) {
+    printf("DUPLIKATI");
+  } else {
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+      cnt += check_password(passwords[i]);
+    }
+    printf("%d", cnt);
+  }
+
+  return 0;
+}
