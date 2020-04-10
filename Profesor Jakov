@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  char ime[32];
+  char prezime[32];
+}ucenik;
+
+int compare(ucenik u1, ucenik u2){
+    return strcmp(u1.prezime, u2.prezime);
+}
+
+void sort (ucenik array[], int n){
+  for (int i = 1; i < n; i++) {
+    ucenik tmp = array[i];
+    int j = i;
+
+    while (j > 0 && compare(array[j - 1], tmp) > 0) {
+        array[j] = array[j - 1];
+        j--;
+    }
+
+    array[j] = tmp;
+  }
+}
+
+
+int main() {
+
+  int n;
+  ucenik u[30];
+
+  scanf ("%d\n", &n);
+
+  for (int i = 0; i < n; ++i){
+    scanf ("%s %s", u[i].ime, u[i].prezime);
+  }
+
+  sort(u, n);
+
+  for (int i = 1; i < n + 1; ++i){
+    printf("%d %s %s\n", i, u[i-1].ime, u[i-1].prezime);
+  }
+  
+  return 0;
+}
