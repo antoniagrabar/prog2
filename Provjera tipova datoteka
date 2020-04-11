@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+int check(char name[]){
+  char ext[5];
+
+  for (int i = 0; i < 4; ++i){
+    ext[i] = name[strlen(name) - 4 + i];
+  }
+
+  ext[4] = '\0';
+
+  if (!strcmp(ext, ".mp3")) return 1;
+  if (!strcmp(ext, ".mp4")) return 2;
+  if (!strcmp(ext, ".txt")) return 3;
+
+  return 0;
+}
+
+
+int main() {
+
+  char name[256];
+  int music = 0;
+  int video = 0;
+  int text = 0;
+  int other = 0;
+
+  FILE *fp;
+  fp = fopen("input.dat", "r");
+
+  while(fscanf(fp, "%s\n", name) > 0){
+    int res = check(name);
+
+    switch(res) {
+      case 1:
+        music++;
+        break;
+      case 2:
+        video++;
+        break;
+      case 3:
+        text++;
+        break;
+      case 0:
+        other++;
+        break;
+    }
+  }
+
+  printf("%d\n%d\n%d\n%d\n", music, video, text, other);
+
+  fclose(fp);
+
+  return 0;
+}
