@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+int main() {
+  char format[3];
+  int w, h, d, num;
+  int hist[256] = {0};
+  
+  FILE *fp;
+  fp = fopen("input.dat", "r");
+  
+  fscanf(fp, "%s", format);
+  
+  if (strcmp(format, "P2")) {
+    printf("NE");
+    fclose(fp);
+    return 0;
+  }
+  
+  fscanf(fp, "%d %d\n%d", &w, &h, &d);
+  
+  for (int i = 0; i < w * h; i++) {
+    fscanf(fp, "%d", &num);
+    
+    hist[num]++;
+  }
+  
+  for (int i = 0; i <= d; i++) {
+    printf("%d ", hist[i]);
+  }
+  
+  fclose(fp);
+  
+  return 0;
+}
