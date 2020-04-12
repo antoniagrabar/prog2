@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+#define SIZE 512
+
+int main() {
+  char message[100][SIZE];
+  int n = 0;
+
+  FILE *fp;
+  fp = fopen("input.dat", "r");
+
+  while (!feof(fp)) {
+    fgets(message[n], SIZE, fp);
+    n++;
+  }
+
+  fclose(fp);
+
+  fp = fopen("decrypted.txt", "w");
+
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < strlen(message[i]); j++) {
+      if ((message[i][j] >= 65 && message[i][j] <= 77) || (message[i][j] >= 97 && message[i][j] <= 109)) {
+        fprintf(fp, "%c", message[i][j] + 13);
+        printf("%c", message[i][j] + 13);
+      } else if ((message[i][j] >= 78 && message[i][j] <= 90) || (message[i][j] >= 110 && message[i][j] <= 122)) {
+        fprintf(fp, "%c", message[i][j] - 13);
+        printf("%c", message[i][j] - 13);
+      } else {
+        fprintf(fp, "%c", message[i][j]);
+        printf("%c", message[i][j]);
+      }
+    }
+    printf("\n");
+  }
+
+  fclose(fp);
+
+  return 0;
+}
