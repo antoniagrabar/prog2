@@ -1,0 +1,120 @@
+#include <stdio.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+typedef struct {
+  int d;
+  int m;
+  int y;
+} date;
+
+typedef struct {
+  char name[100];
+  int o;
+  int p;
+  date dat;
+  date first;
+} dolphin;
+
+date newer_date(date d1, date d2) {
+  if (d1.y > d2.y) return d1;
+  if (d1.y < d2.y) return d2;
+  if (d1.m > d2.m) return d1;
+  if (d1.m < d2.m) return d2;
+  if (d1.d > d2.d) return d1;
+  return d2;
+}
+
+date older_date(date d1, date d2) {
+  if (d1.y > d2.y) return d2;
+  if (d1.y < d2.y) return d1;
+  if (d1.m > d2.m) return d2;
+  if (d1.m < d2.m) return d1;
+  if (d1.d > d2.d) return d2;
+  return d1;
+}
+
+int is_leap(int y) {
+  if (y % 4 != 0) return 0;
+  if (y % 400 != 0) return 0;
+  return 1;
+}
+
+int date_diff(date d1, date d2) {
+  int mon[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  int num = 0;
+  int days1 = 0, days2 = 0;
+  
+  if(is_leap(d1.y)){
+    days1 = d1.d + mon[d1.m] * d1.m + d1.y * 366;
+  } else {
+    days1 = d1.d + mon[d1.m] * d1.m + d1.y * 365;
+  }
+  
+  if(is_leap(d2.y)){
+    days2 = d2.d + mon[d2.m] * d2.m + d2.y * 366;
+  } else {
+    days2 = d2.d + mon[d2.m] * d2.m + d2.y * 365;
+  }
+  
+  num = days2 - days1;
+
+  return num;
+}
+
+int main(){
+  int d, n, br = 0, pop = 0;
+  dolphin dol[100];
+  date day;
+
+  FILE *fp;
+  fp = fopen ("input.dat", "r");
+
+  fscanf(fp, "%d", &d);
+  fscanf(fp, "%d", &n);
+
+  for (int i = 0; i < d; i++) {
+    dolphin tmp;
+    int found = 0;
+
+    fscanf(fp, "%d %d %d.%d.%d.", &tmp.o, &tmp.p, &tmp.dat.d, &tmp.dat.m, &tmp.dat.y);
+
+    for (int j = 0; j < br; j++) {
+      if (tmp.o == dol[j].o && tmp.p == dol[j].p) {
+        dol[j].dat = newer_date(tmp.dat, dol[j].dat);
+        dol[j].first = older_date(tmp.dat, dol[j].first);
+        found = 1;
+      }
+    }
+
+    if (!found) {
+      fscanf(fp, "%s", tmp.name);
+
+      tmp.first = tmp.dat;
+      dol[br] = tmp;
+
+      br++;
+    }
+  }
+
+  fscanf(fp, "%d.%d.%d", &day.d, &day.m, &day.y);
+
+  for (int i = 0; i < br; i++) {
+    if (date_diff(dol[i].dat, day) < n) {
+      pop++;
+    }
+  }
+  printf("%d\n", pop);
+
+  for (int i = 0; i < br; i++) {
+    if (date_diff(dol[i].dat, day) < n) {
+      printf("%s %d %d %d.%d.%d. %d.%d.%d.\n", dol[i].name, dol[i].o, dol[i].p, dol[i].first.d, dol[i].first.m, dol[i].first.y, dol[i].dat.d, dol[i].dat.m, dol[i].dat.y);
+    }
+  }
+
+  fclose(fp);
+
+  return 0;
+}
