@@ -5,19 +5,20 @@
 #define DEBUG(...) printf(__VA_ARGS__)
 #endif
 
-void print_binary(uint32_t b, int n) {
-  uint32_t p = (1 << (n - 1));
+void print_binary (uint32_t n, int k){
+  uint32_t p = (1 << (k-1));
 
-  while(p != 0) {
-    printf("%d",b & p ? 1 : 0);
+  while (p != 0){
+    printf("%d", n & p ? 1 : 0);
     p >>= 1;
   }
+  printf("\n");
 }
 
-uint32_t create_bitmask(int n) {
+uint32_t create_bitmask (int n){
   uint32_t mask = 0;
 
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < n; ++i){
     mask <<= 1;
     mask |= 1;
   }
@@ -25,45 +26,51 @@ uint32_t create_bitmask(int n) {
   return mask;
 }
 
-uint32_t reverse_binary(uint32_t input, int n) {
-    uint32_t output = 0;
-    
-    for (int i = 0; i < n; i++) {
-        output <<= 1;
-        output |= input & 0x01;
-        input >>= 1;
-    }
+uint32_t reverse_binary (uint32_t input, int n){
+  uint32_t output = 0;
 
-    return output;
+  for (int i = 0; i < n; ++i){
+    output <<= 1;
+    output |= input & 0x01;
+    input >>= 1;
+  }
+
+  return output;
 }
+
 
 int main() {
   
   uint32_t bin = 0;
-  int n;
+  int n, k;
 
-  scanf("%d ", &n);
+  scanf("%d\n%d", &n, &k);
 
-  uint32_t half_mask = create_bitmask(n / 2);
+  uint32_t half_mask = create_bitmask(n >> 1);
+  uint32_t mask = create_bitmask(n);
 
+
+do {
   print_binary(bin, n);
-  printf("\n");
-
-  do{
+  if (bin == 0){
+    bin |= 1;
+  } else {
+    bin &= half_mask;
     bin <<= 1;
     bin |= 1;
-    print_binary(reverse_binary(bin, n / 2), n / 2);
-    print_binary(bin, n / 2);
-    printf("\n");
-  } while (bin != half_mask);
+  }
+  bin |= reverse_binary(bin, n);
+  
+} while (bin != mask);
 
+
+do{
+  print_binary(bin, n);
   bin <<= 1;
-  do{
-    print_binary(reverse_binary(bin, n / 2), n / 2);
-    print_binary(bin, n / 2);
-    printf("\n");
-    bin <<= 1;
-  } while((bin & half_mask) != 0);
+  bin &= half_mask;
+  bin |= reverse_binary(bin, n);
+} while((bin & half_mask) != 0);
+
 
   return 0;
 }
