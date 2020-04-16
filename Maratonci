@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <string.h>
+
+#ifndef DEBUG
+#define DEBUG(...) printf(__VA_ARGS__)
+#endif
+
+
+typedef struct {
+  char ime[256];
+  char kat[16];
+  int h;
+  int m;
+  int s;
+  float brzina;
+  int vrijeme;
+} maratonac;
+
+
+float calculate_speed(int h, int m, int s){
+  float v;
+  float dist = 42.195;
+  int time = h * 3600 + m * 60 + s;
+  v = dist / time;
+  return v * 1000;
+}
+
+int calculate_time(int h, int m, int s){
+  int time = h * 3600 + m * 60 + s;
+  return time;
+}
+
+int compare(maratonac m1, maratonac m2){
+  if (m1.brzina > m2.brzina){
+    return 0;
+  } else {
+    return 1;
+  }
+  return -1;
+}
+
+void sort (maratonac array[], int n){
+  for (int i = 1; i < n; i++) {
+    maratonac tmp = array[i];
+    int j = i;
+
+    while (j > 0 && compare(array[j - 1], tmp) > 0) {
+        array[j] = array[j - 1];
+        j--;
+    }
+
+    array[j] = tmp;
+  }
+}
+
+
+
+int main() {
+
+  maratonac m[100];
+  int size = 0;
+  int count_pro = 0, count_am = 0;
+  float pro, am;
+  float average_pro, average_am;
+
+  FILE *fp;
+  fp = fopen("input.dat", "r");
+
+  while (fscanf(fp, "%[^,], %[^:]: %d:%d:%d\n", m[size].ime, m[size].kat, &m[size].h, &m[size].m, &m[size].s) > 0) {
+    m[size].brzina = calculate_speed(m[size].h, m[size].m, m[size].s);
+    m[size].vrijeme = calculate_time(m[size].h, m[size].m, m[size].s);
+
+    if (!strcmp(m[size].kat, "profesionalac")){
+      pro += m[size].brzina;
+      count_pro++;
+    } else {
+      am += m[size].brzina;
+      count_am++;
+    }
+
+    size++;
+  }
+
+  average_pro = pro / count_pro;
+  average_am = am / count_am;
+
+  sort(m, size);
+
+  printf("Profesionalci:\n");
+
+  for (int i = 0; i < size; ++i){
+    if (!strcmp(m[i].kat, "profesionalac") && m[i].brzina > average_pro){
+      printf("\t%s %.2f\n",  m[i].ime, m[i].brzina);
+    }
+  }
+
+  printf("Rekreativci:\n");
+
+  for (int i = 0; i < size; ++i){
+    if (!strcmp(m[i].kat, "rekreativac") && m[i].brzina > average_am){
+      printf("\t%s %.2f\n",  m[i].ime, m[i].brzina);
+    }
+  }
+  
+  fclose(fp);
+ 
+  return 0;
+}
